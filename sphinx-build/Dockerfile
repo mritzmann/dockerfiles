@@ -5,5 +5,5 @@ RUN pip install sphinx_rtd_theme
 
 EXPOSE 80
 
-CMD sphinx-build /tmp/docs /tmp/build -aEW \
+CMD sphinx-build /tmp/docs /tmp/build -aEW -j 4 \
     && python3 -m http.server 80 --directory /tmp/build
