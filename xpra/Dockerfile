@@ -12,7 +12,12 @@ RUN apt-get update \
 RUN apt-get update \
   && apt-get install -y thunderbird
 
+# add non-root user
+RUN groupadd --system --gid 1000 app \
+  && useradd --create-home --uid 1000 --gid 1000 --shell /bin/bash app
+
 ENV DISPLAY=:100
+USER app
 EXPOSE 10000
 
 CMD xpra start --bind-tcp=0.0.0.0:10000 --html=on --start=thunderbird --daemon=no --xvfb="/usr/bin/Xvfb +extension Composite -screen 0 1920x1080x24+32 -nolisten tcp -noreset" --pulseaudio=no --notifications=no --bell=no
